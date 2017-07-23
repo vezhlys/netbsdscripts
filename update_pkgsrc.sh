@@ -1,3 +1,3 @@
 #!/bin/sh
 
-cd /usr/pkgsrc && cvs update -dP
+export CVS_RSH="ssh" && cd /usr/pkgsrc && cvs update -dP
