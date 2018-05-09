@@ -1,4 +1,6 @@
 #!/bin/sh
 
-cd /home/andrius/netbsd-src/
-./build.sh -O ../obj -T ../tools -U -u distribution
+cd ~/netbsd-src/
+logtime > ~/netbsdscripts/userland_start.txt
+./build.sh -r -j2 -O ../obj -T ../tools -U distribution
+logtime > ~/netbsdscripts/userland_stop.txt
