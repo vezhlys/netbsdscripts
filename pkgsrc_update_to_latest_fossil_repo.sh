@@ -1,8 +1,8 @@
 #!/bin/sh
 
 cd /usr/pkgsrc &&
-sudo fossil open pkgsrc.fossil &&
-sudo fossil pull &&
-sudo fossil update --latest &&
-sudo fossil close -f
+fossil open pkgsrc.fossil &&
+fossil pull -v &&
+fossil update -v &&
+fossil close
 
