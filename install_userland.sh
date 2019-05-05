@@ -1,5 +1,5 @@
 #!/bin/sh
 
-cd /home/andrius/netbsd-src/ &&
+cd ~/netbsd-src/ &&
 ./build.sh -O ../obj -T ../tools -U install=/
 
