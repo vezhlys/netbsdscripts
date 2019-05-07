@@ -539,8 +539,8 @@ sysbeep0	at pcppi?
 #tdfxdrm*	at drm?		# 3dfx (voodoo) DRM driver
 
 # DRMKMS drivers
-#i915drmkms*	at pci? dev ? function ?
-#intelfb*	at intelfbbus?
+i915drmkms*	at pci? dev ? function ?
+intelfb*	at intelfbbus?
 
 #radeon* 	at pci? dev ? function ?
 #radeondrmkmsfb* at radeonfbbus?
@@ -1405,12 +1405,12 @@ viornd* at virtio?			# Virtio entropy device
 vioscsi* at virtio?			# Virtio SCSI device
 
 # Hyper-V devices
-vmbus*		at acpi?		# Hyper-V VMBus
-hvn*		at vmbus?		# Hyper-V NetVSC
-hvs*		at vmbus?		# Hyper-V StorVSC
-hvheartbeat*	at vmbus?		# Hyper-V Heartbeat Service
-hvshutdown*	at vmbus?		# Hyper-V Guest Shutdown Service
-hvtimesync*	at vmbus?		# Hyper-V Time Synchronization Service
+#vmbus*		at acpi?		# Hyper-V VMBus
+#hvn*		at vmbus?		# Hyper-V NetVSC
+#hvs*		at vmbus?		# Hyper-V StorVSC
+#hvheartbeat*	at vmbus?		# Hyper-V Heartbeat Service
+#hvshutdown*	at vmbus?		# Hyper-V Guest Shutdown Service
+#hvtimesync*	at vmbus?		# Hyper-V Time Synchronization Service
 #hvkvp*		at vmbus?		# Hyper-V Data Exchange Service
 
 
