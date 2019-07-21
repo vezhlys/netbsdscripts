@@ -3,7 +3,7 @@
 Script | Description
 ------------ | -------------
 build_amd64_kernel.sh | build GENERIC amd64 kernel.
-build_vt310dp_kernel.sh |	build VT-310DP i386 kernel (configuration is available in this repository).
+build_vt310dp_kernel.sh | build VT-310DP i386 kernel (configuration is available in this repository).
 build_modules.sh | build kernel modules using build.sh.
 install_modules.sh | install kernel modules using build.sh.
 build_userland.sh | build kernel userland using build.sh.
@@ -14,6 +14,7 @@ extract_set.sh | extract NetBSD binary set.
 fetch_pkgsrc.sh | fetch latest pkgsrc from CVS (anoncvs3.de.NetBSD.org mirror is hardcoded)
 update_pkgsrc.sh | update pkgsrc from CVS
 netbsd_clone_fossil_repo.sh | clone the [NetBSD src repo](https://src.fossil.netbsd.org/) using fossil-scm
+netbsd_update_to_latest_fossil_repo.sh | update netbsd src to latests using fossil-scm.
 pkgsrc_clone_fossil_repo.sh | clone pkgsrc repo using fossil-scm.
 pkgsrc_update_to_latest_fossil_repo.sh | update pkgsrc to latest using fossil-scm.
 update_packages_full.sh | update all packages and ensure correct shared library dependencies (using pkg_rolling-replace).
