@@ -22,4 +22,4 @@ update_packages_less_build.sh |  update all packages but do as little rebuilding
 fetch_pkg_vulnerabilities.sh | fetch pkg vulnerabilities, can be scheduled using cron.
 turn-off-beeper.sh | turn off beeper sound.	
 disable_blocking_mapping_of_null_page.sh | disables protection against NULL pointer dereferences (if possible by kernel config).
-VT-310DP | simplified kernel configuration for VIA VT-310DP motherboard based on GENERIC v1.120 (padlock is not enabled, use [dynamic kernel modules](http://netbsd.gw.com/cgi-bin/man-cgi?module+7+NetBSD-current)).
+VT-310DP | simplified kernel configuration for VIA VT-310DP motherboard based on GENERIC v1.1210 (padlock is not enabled, use [dynamic kernel modules](http://netbsd.gw.com/cgi-bin/man-cgi?module+7+NetBSD-current)).
