@@ -1,3 +1,3 @@
 #/bin/sh
 
-tar --gunzip -C / -xpzvf $1 
+tar -C / -xpzvf $1 
