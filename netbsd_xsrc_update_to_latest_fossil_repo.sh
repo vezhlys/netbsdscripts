@@ -1,8 +1,8 @@
 #!/bin/sh
 
 export SQLITE_TMPDIR=$HOME
-cd $HOME/netbsd-src &&
-fossil open netbsd-src.fossil &&
+cd $HOME/netbsd-xsrc &&
+fossil open netbsd-xsrc.fossil &&
 fossil update -v &&
 fossil close
 
