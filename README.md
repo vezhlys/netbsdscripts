@@ -14,11 +14,11 @@ extract_set.sh | extract NetBSD binary set.
 fetch_pkgsrc.sh | fetch latest pkgsrc from CVS (anoncvs3.de.NetBSD.org mirror is hardcoded)
 update_pkgsrc.sh | update pkgsrc from CVS
 netbsd_clone_fossil_repo.sh | clone the [NetBSD src repo](https://src.fossil.netbsd.org/) using fossil-scm
-netbsd_update_to_latest_fossil_repo.sh | update netbsd src to latest using fossil-scm.
+netbsd_update_to_latest_fossil_repo.sh | update netbsd src to latest using fossil-scm and clean unmanaged files.
 pkgsrc_clone_fossil_repo.sh | clone pkgsrc repo using fossil-scm.
-pkgsrc_update_to_latest_fossil_repo.sh | update pkgsrc to latest using fossil-scm.
+pkgsrc_update_to_latest_fossil_repo.sh | update pkgsrc to latest using fossil-scm and clean unmanaged files.
 netbsd_xsrc_clone_fossil_repo.sh | clone the [NetBSD xsrc repo](https://xsrc.fossil.netbsd.org/) using fossil-scm
-netbsd_xsrc_update_to_latest_fossil_repo.sh | update netbsd xsrc to latest using fossil-scm.
+netbsd_xsrc_update_to_latest_fossil_repo.sh | update netbsd xsrc to latest using fossil-scm and clean unmanaged files.
 update_packages_full.sh | update all packages and ensure correct shared library dependencies (using pkg_rolling-replace).
 update_packages_less_build.sh |  update all packages but do as little rebuilding as possible, creates binary package too (using pkg_rolling-replace).
 fetch_pkg_vulnerabilities.sh | fetch pkg vulnerabilities, can be scheduled using cron.
