@@ -1,4 +1,4 @@
 #!/bin/sh
 
-pkg_rolling-replace -rsuv
+pkg_rolling-replace -rsuv "$@"
 

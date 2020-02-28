@@ -1,4 +1,4 @@
 #!/bin/sh
 
-pkg_rolling-replace -vu
+pkg_rolling-replace -vu "$@"
 
