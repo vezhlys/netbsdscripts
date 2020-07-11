@@ -1,4 +1,4 @@
-# $NetBSD: GENERIC,v 1.1225 2020/02/17 06:32:46 nisimura Exp $
+# $NetBSD: GENERIC,v 1.1229 2020/04/25 16:10:06 bouyer Exp $
 #
 # GENERIC machine description file
 #
@@ -22,7 +22,7 @@ include 	"arch/i386/conf/std.i386"
 
 options 	INCLUDE_CONFIG_FILE	# embed config file in kernel binary
 
-#ident		"GENERIC-$Revision: 1.1225 $"
+#ident		"GENERIC-$Revision: 1.1229 $"
 
 maxusers	64		# estimated number of users
 
@@ -43,6 +43,15 @@ coretemp*	at cpu?		# Intel on-die thermal sensor
 #powernow0	at cpu0		# AMD PowerNow! and Cool'n'Quiet (non-ACPI)
 #viac7temp*	at cpu?		# VIA C7 temperature sensor
 #vmt0		at cpu0		# VMware Tools
+
+#Xen PV support for HVM guests
+#options 	XENPVHVM
+#options 	XEN
+#hypervisor*	at mainbus?		# Xen hypervisor
+#xenbus*	 	at hypervisor?		# Xen virtual bus
+#xencons*	at hypervisor?		# Xen virtual console
+#xennet*  	at xenbus?		# Xen virtual network interface
+#xbd*		at xenbus?		# Xen virtual block device
 
 options 	MTRR		# memory-type range register syscall support
 
@@ -198,7 +207,7 @@ options 	PPP_FILTER	# Active filter support for PPP (requires bpf)
 #options 	ACPIVERBOSE	# verbose ACPI device autoconfig messages
 #options 	EISAVERBOSE	# verbose EISA device autoconfig messages
 #options 	MIIVERBOSE	# verbose PHY autoconfig messages
-#options 	PCIVERBOSE	# verbose PCI device autoconfig messages
+options 	PCIVERBOSE	# verbose PCI device autoconfig messages
 #options 	PCI_CONFIG_DUMP	# verbosely dump PCI config space
 #options 	PCMCIAVERBOSE	# verbose PCMCIA configuration messages
 options 	SCSIVERBOSE	# human readable SCSI error messages
@@ -434,9 +443,9 @@ iic*	at viapcib?
 					# watchdog
 pchb*	at pci? dev ? function ?	# PCI-Host bridges
 options 	AGP_X86
-pceb*	at pci? dev ? function ?	# PCI-EISA bridges
+#pceb*	at pci? dev ? function ?	# PCI-EISA bridges
 pcib*	at pci? dev ? function ?	# PCI-ISA bridges
-pcmb*	at pci? dev ? function ?	# PCI-MCA bridges
+#pcmb*	at pci? dev ? function ?	# PCI-MCA bridges
 ppb*	at pci? dev ? function ?	# PCI-PCI bridges
 # XXX 'puc's aren't really bridges, but there's no better place for them here
 puc*	at pci? dev ? function ?	# PCI "universal" comm. cards
@@ -463,7 +472,7 @@ agp*	at pchb?
 isa0	at viapcib?
 #isa0	at rdcpcib?
 isa0	at mainbus?
-isa0	at pceb?
+#isa0	at pceb?
 isa0	at pcib?
 
 # PCMCIA bus support
@@ -780,22 +789,22 @@ aha*	at isapnp?			# Adaptec AHA-154[02
 aic*	at isapnp?			# Adaptec AHA-1520B
 
 # ISA SCSI controllers
-adv0	at isa? port ? irq ? drq ?	# AdvanSys APB-514[02] SCSI
-aha0	at isa? port 0x330 irq ? drq ?	# Adaptec 154[02] SCSI
-aha1	at isa? port 0x334 irq ? drq ?
-ahc0	at isa? port ? irq ?		# Adaptec 284x SCSI
-aic0	at isa? port 0x340 irq 11	# Adaptec 152[02] SCSI
-bha0	at isa? port 0x330 irq ? drq ?	# BusLogic [457]4X SCSI
-bha1	at isa? port 0x334 irq ? drq ?
+#adv0	at isa? port ? irq ? drq ?	# AdvanSys APB-514[02] SCSI
+#aha0	at isa? port 0x330 irq ? drq ?	# Adaptec 154[02] SCSI
+#aha1	at isa? port 0x334 irq ? drq ?
+#ahc0	at isa? port ? irq ?		# Adaptec 284x SCSI
+#aic0	at isa? port 0x340 irq 11	# Adaptec 152[02] SCSI
+#bha0	at isa? port 0x330 irq ? drq ?	# BusLogic [457]4X SCSI
+#bha1	at isa? port 0x334 irq ? drq ?
 # The "nca" and "dpt" probes might give false hits or hang your machine.
 #dpt0	at isa? port 0x170 irq ? drq ?	# DPT SmartCache/SmartRAID
 #nca0	at isa? port 0x360 irq 15	# Port-mapped NCR 53C80 controller
 #nca1	at isa? iomem 0xd8000 irq 5	# Memory-mapped controller (T128, etc.)
-sea0	at isa? iomem 0xc8000 irq 5	# Seagate/Future Domain SCSI
-uha0	at isa? port 0x330 irq ? drq ?	# UltraStor [13]4f SCSI
-uha1	at isa? port 0x340 irq ? drq ?
-wds0	at isa? port 0x350 irq 15 drq 6	# WD7000 and TMC-7000 controllers
-wds1	at isa? port 0x358 irq 11 drq 5
+#sea0	at isa? iomem 0xc8000 irq 5	# Seagate/Future Domain SCSI
+#uha0	at isa? port 0x330 irq ? drq ?	# UltraStor [13]4f SCSI
+#uha1	at isa? port 0x340 irq ? drq ?
+#wds0	at isa? port 0x350 irq 15 drq 6	# WD7000 and TMC-7000 controllers
+#wds1	at isa? port 0x358 irq 11 drq 5
 
 # CardBus SCSI cards
 adv*	at cardbus? function ?	# AdvanSys 1200[A,B], 9xx[U,UA] SCSI
@@ -831,15 +840,15 @@ ciss*	at pci? dev ? function ?	# HP Smart Array controllers
 icp*	at pci? dev ? function ?	# ICP-Vortex GDT & Intel RAID
 #mlx*	at pci? dev ? function ?	# Mylex DAC960 & DEC SWXCR family
 #mlx*	at eisa? slot ?			# Mylex DAC960 & DEC SWXCR family
-twa*	at pci? dev ? function ?	# 3ware Escalade 95xx RAID controllers
-twe*	at pci? dev ? function ?	# 3ware Escalade RAID controllers
+#twa*	at pci? dev ? function ?	# 3ware Escalade 95xx RAID controllers
+#twe*	at pci? dev ? function ?	# 3ware Escalade RAID controllers
 
 ld*	at aac? unit ?			# logical disk devices
 ld*	at amr? unit ?
 #ld*	at cac? unit ?
 ld*	at icp? unit ?
-ld*	at twa? unit ?
-ld*	at twe? unit ?
+#ld*	at twa? unit ?
+#ld*	at twe? unit ?
 #ld*	at mlx? unit ?
 
 icpsp*	at icp? unit ?			# SCSI pass-through
@@ -850,34 +859,34 @@ icpsp*	at icp? unit ?			# SCSI pass-through
 # how to set up DMA modes for this chip. This may work, or may cause
 # a machine hang with some controllers.
 pciide* 	at pci? dev ? function ? flags 0x0000	# GENERIC pciide driver
-acardide*	at pci? dev ? function ?	# Acard IDE controllers
-aceride*	at pci? dev ? function ?	# Acer Lab IDE controllers
+#acardide*	at pci? dev ? function ?	# Acard IDE controllers
+#aceride*	at pci? dev ? function ?	# Acer Lab IDE controllers
 ahcisata*	at pci? dev ? function ?	# AHCI SATA controllers
-artsata*	at pci? dev ? function ?	# Intel i31244 SATA controller
+#artsata*	at pci? dev ? function ?	# Intel i31244 SATA controller
 cmdide* 	at pci? dev ? function ?	# CMD tech IDE controllers
 cypide* 	at pci? dev ? function ?	# Cypress IDE controllers
-gcscide*	at pci? dev ? function ?	# AMD CS5535 Companion IDE controllers
-geodeide*	at pci? dev ? function ?	# AMD Geode IDE controllers
-hptide* 	at pci? dev ? function ?	# Triones/HighPoint IDE controllers
-iteide* 	at pci? dev ? function ?	# IT Express IDE controllers
-ixpide* 	at pci? dev ? function ?	# ATI IXP IDE controllers
+#gcscide*	at pci? dev ? function ?	# AMD CS5535 Companion IDE controllers
+#geodeide*	at pci? dev ? function ?	# AMD Geode IDE controllers
+#hptide* 	at pci? dev ? function ?	# Triones/HighPoint IDE controllers
+#iteide* 	at pci? dev ? function ?	# IT Express IDE controllers
+#ixpide* 	at pci? dev ? function ?	# ATI IXP IDE controllers
 jmide*		at pci? dev ? function ?	# JMicron PCI-e PATA/SATA controllers
 ahcisata*	at jmide?
 mvsata* 	at pci? dev ? function ?	# Marvell Hercules-I/II
-optiide*	at pci? dev ? function ?	# Opti IDE controllers
+#optiide*	at pci? dev ? function ?	# Opti IDE controllers
 piixide*	at pci? dev ? function ?	# Intel IDE controllers
 pdcide* 	at pci? dev ? function ?	# Promise IDE controllers
 pdcsata*	at pci? dev ? function ?	# Promise SATA150 controllers
-rccide* 	at pci? dev ? function ?	# ServerWorks IDE controllers
-rdcide* 	at pci? dev ? function ?	# RDC PMX-1000 IDE controllers
+#rccide* 	at pci? dev ? function ?	# ServerWorks IDE controllers
+#rdcide* 	at pci? dev ? function ?	# RDC PMX-1000 IDE controllers
 satalink*	at pci? dev ? function ?	# SiI SATALink controllers
-schide* 	at pci? dev ? function ?	# Intel SCH IDE controllers
+#schide* 	at pci? dev ? function ?	# Intel SCH IDE controllers
 siisata*	at pci? dev ? function ?	# SiI SteelVine controllers
-siside* 	at pci? dev ? function ?	# SiS IDE controllers
-slide*		at pci? dev ? function ?	# Symphony Labs IDE controllers
-svwsata*	at pci? dev ? function ?	# ServerWorks SATA controllers
-stpcide*	at pci? dev ? function ?	# STMicro STPC IDE controllers
-toshide*	at pci? dev ? function ?	# TOSHIBA PICCOLO controllers
+#siside* 	at pci? dev ? function ?	# SiS IDE controllers
+#slide*		at pci? dev ? function ?	# Symphony Labs IDE controllers
+#svwsata*	at pci? dev ? function ?	# ServerWorks SATA controllers
+#stpcide*	at pci? dev ? function ?	# STMicro STPC IDE controllers
+#toshide*	at pci? dev ? function ?	# TOSHIBA PICCOLO controllers
 viaide* 	at pci? dev ? function ?	# VIA/AMD/Nvidia IDE controllers
 
 # ISA Plug-and-Play IDE controllers
@@ -887,7 +896,7 @@ wdc*	at isapnp?
 #wdc*	at pcmcia? function ?
 
 # CardBus IDE controllers
-njata*	at cardbus? function ? flags 0x01	# Workbit NinjaATA-32
+#njata*	at cardbus? function ? flags 0x01	# Workbit NinjaATA-32
 siisata* at cardbus? function ? 		# SiI SteelVine controllers
 
 # ISA ST506, ESDI, and IDE controllers
@@ -975,7 +984,7 @@ et*	at pci? dev ? function ?	# Agere/LSI ET1310/ET1301 Gigabit
 ex*	at pci? dev ? function ?	# 3Com 3c90x[BC]
 fxp*	at pci? dev ? function ?	# Intel EtherExpress PRO 10+/100B
 gsip*	at pci? dev ? function ?	# NS83820 Gigabit Ethernet
-hme*	at pci? dev ? function ?	# Sun Microelectronics STP2002-STQ
+#hme*	at pci? dev ? function ?	# Sun Microelectronics STP2002-STQ
 ipw*	at pci? dev ? function ?	# Intel PRO/Wireless 2100
 iwi*	at pci? dev ? function ?	# Intel PRO/Wireless 2200BG
 iwm*	at pci? dev ? function ?	# Intel Wireless WiFi Link 7xxx
@@ -990,25 +999,25 @@ mskc*	at pci? dev ? function ?	# Marvell Yukon 2 Gigabit Ethernet
 msk*	at mskc?			# Marvell Yukon 2 Gigabit Ethernet
 mtd*	at pci? dev ? function ?	# Myson MTD803 3-in-1 Ethernet
 ne*	at pci? dev ? function ?	# NE2000-compatible Ethernet
-nfe*	at pci?	dev ? function ?	# NVIDIA nForce Ethernet
+#nfe*	at pci?	dev ? function ?	# NVIDIA nForce Ethernet
 ntwoc*	at pci? dev ? function ?	# Riscom/N2 PCI Sync Serial
-pcn*	at pci? dev ? function ?	# AMD PCnet-PCI Ethernet
+#pcn*	at pci? dev ? function ?	# AMD PCnet-PCI Ethernet
 ral*	at pci? dev ? function ?	# Ralink Technology RT25x0 802.11a/b/g
 re*	at pci? dev ? function ?	# Realtek 8139C+/8169/8169S/8110S
 rtk*	at pci? dev ? function ?	# Realtek 8129/8139
 rtw*	at pci? dev ? function ?	# Realtek 8180L (802.11)
 rtwn*	at pci? dev ? function ?	# Realtek 8188CE/8192CE 802.11b/g/n
-sf*	at pci? dev ? function ?	# Adaptec AIC-6915 Ethernet
+#sf*	at pci? dev ? function ?	# Adaptec AIC-6915 Ethernet
 sip*	at pci? dev ? function ?	# SiS 900/DP83815 Ethernet
 skc*	at pci? dev ? function ?	# SysKonnect SK9821 Gigabit Ethernet
 sk*	at skc?				# SysKonnect SK9821 Gigabit Ethernet
 ste*	at pci? dev ? function ?	# Sundance ST-201 Ethernet
 stge*	at pci? dev ? function ?	# Sundance/Tamarack TC9021 Gigabit
-ti*	at pci? dev ? function ?	# Alteon ACEnic gigabit Ethernet
-tl*	at pci? dev ? function ?	# ThunderLAN-based Ethernet
-tlp*	at pci? dev ? function ?	# DECchip 21x4x and clones
-txp*	at pci? dev ? function ?	# 3com 3cr990
-vte*	at pci? dev ? function ?	# RDC R6040 10/100 Ethernet
+#ti*	at pci? dev ? function ?	# Alteon ACEnic gigabit Ethernet
+#tl*	at pci? dev ? function ?	# ThunderLAN-based Ethernet
+#tlp*	at pci? dev ? function ?	# DECchip 21x4x and clones
+#txp*	at pci? dev ? function ?	# 3com 3cr990
+#vte*	at pci? dev ? function ?	# RDC R6040 10/100 Ethernet
 vge*	at pci? dev ? function ?	# VIATech VT612X Gigabit Ethernet
 vmx*	at pci? dev ? function ?	# VMware VMXNET3
 vr*	at pci? dev ? function ?	# VIA Rhine Fast Ethernet
@@ -1022,11 +1031,11 @@ xge*	at pci? dev ? function ?	# Neterion (S2io) Xframe-I 10GbE
 #tlp*	at eisa? slot ?			# DEC DE-425 Ethernet
 
 # ISA Plug-and-Play network interfaces
-an*	at isapnp?			# Aironet 802.11
-ep*	at isapnp?			# 3Com 3c509 Ethernet
-fmv*	at isapnp?			# Fujitsu FMV-183
-le*	at isapnp?			# AMD PCnet-ISA Ethernet
-ne*	at isapnp?			# NE2000-compatible Ethernet
+#an*	at isapnp?			# Aironet 802.11
+#ep*	at isapnp?			# 3Com 3c509 Ethernet
+#fmv*	at isapnp?			# Fujitsu FMV-183
+#le*	at isapnp?			# AMD PCnet-ISA Ethernet
+#ne*	at isapnp?			# NE2000-compatible Ethernet
 
 # PCMCIA network interfaces
 #an*	at pcmcia? function ?		# Aironet PC4500/PC4800 (802.11)
@@ -1048,30 +1057,30 @@ ne*	at isapnp?			# NE2000-compatible Ethernet
 #sm*	at mhzc?
 
 # ISA network interfaces
-ate0	at isa? port 0x2a0 irq ?		# AT1700
-cs0	at isa? port 0x300 iomem ? irq ? drq ?	# CS8900 Ethernet
-ec0	at isa? port 0x250 iomem 0xd8000 irq 9	# 3Com 3c503 Ethernet
-eg0	at isa? port 0x280 irq 9		# 3c505 Ethernet cards
-el0	at isa? port 0x300 irq 9		# 3c501 Ethernet cards
-ep*	at isa? port ? irq ?			# 3c509 Ethernet cards
-ef0	at isa? port 0x360 iomem 0xd0000 irq 7	# 3c507
-ai0	at isa? port 0x360 iomem 0xd0000 irq 7	# StarLAN
-fmv0	at isa? port 0x2a0 irq ?		# FMV-181/182
-ix0	at isa? port 0x300 irq 10		# EtherExpress/16
-iy0	at isa? port 0x360 irq ?		# EtherExpress PRO 10 ISA
-lc0	at isa? port 0x320 iomem ? irq ?	# DEC EtherWORKS III (LEMAC)
+#ate0	at isa? port 0x2a0 irq ?		# AT1700
+#cs0	at isa? port 0x300 iomem ? irq ? drq ?	# CS8900 Ethernet
+#ec0	at isa? port 0x250 iomem 0xd8000 irq 9	# 3Com 3c503 Ethernet
+#eg0	at isa? port 0x280 irq 9		# 3c505 Ethernet cards
+#el0	at isa? port 0x300 irq 9		# 3c501 Ethernet cards
+#ep*	at isa? port ? irq ?			# 3c509 Ethernet cards
+#ef0	at isa? port 0x360 iomem 0xd0000 irq 7	# 3c507
+#ai0	at isa? port 0x360 iomem 0xd0000 irq 7	# StarLAN
+#fmv0	at isa? port 0x2a0 irq ?		# FMV-181/182
+#ix0	at isa? port 0x300 irq 10		# EtherExpress/16
+#iy0	at isa? port 0x360 irq ?		# EtherExpress PRO 10 ISA
+#lc0	at isa? port 0x320 iomem ? irq ?	# DEC EtherWORKS III (LEMAC)
 #depca0	at isa? port 0x300 iomem 0xc8000 iosiz 0x8000 irq 5	# DEPCA
 #le*	at depca?
-nele0	at isa? port 0x320 irq 9 drq 7		# NE2100
-le*	at nele?
+#nele0	at isa? port 0x320 irq 9 drq 7		# NE2100
+#le*	at nele?
 #ntwoc0	at isa? port 0x300 irq 5 iomem 0xc8000 flags 1	# Riscom/N2 sync serial
-bicc0	at isa? port 0x320 irq 10 drq 7		# BICC IsoLan
-le*	at bicc?
-ne0	at isa? port 0x280 irq 9		# NE[12]000 Ethernet cards
-ne1	at isa? port 0x300 irq 10
-sm0	at isa? port 0x300 irq 10		# SMC91C9x Ethernet
-we0	at isa? port 0x280 iomem 0xd0000 irq 9	# WD/SMC Ethernet
-we1	at isa? port 0x300 iomem 0xcc000 irq 10
+#bicc0	at isa? port 0x320 irq 10 drq 7		# BICC IsoLan
+#le*	at bicc?
+#ne0	at isa? port 0x280 irq 9		# NE[12]000 Ethernet cards
+#ne1	at isa? port 0x300 irq 10
+#sm0	at isa? port 0x300 irq 10		# SMC91C9x Ethernet
+#we0	at isa? port 0x280 iomem 0xd0000 irq 9	# WD/SMC Ethernet
+#we1	at isa? port 0x300 iomem 0xcc000 irq 10
 
 # CardBus network cards
 ath*	at cardbus? function ?	# Atheros 5210/5211/5212 802.11
@@ -1123,13 +1132,13 @@ nsphy*	at mii? phy ?			# NS83840 PHYs
 nsphyter* at mii? phy ? 		# NS83843 PHYs
 pnaphy* at mii? phy ?			# generic HomePNA PHYs
 qsphy*	at mii? phy ?			# Quality Semiconductor QS6612 PHYs
-rdcphy* at mii? phy ?			# RDC R6040 10/100 PHY
+#rdcphy* at mii? phy ?			# RDC R6040 10/100 PHY
 rgephy* at mii? phy ?			# Realtek 8169S/8110S internal PHYs
 rlphy*	at mii? phy ?			# Realtek 8139/8201L PHYs
 smscphy* at mii? phy ?			# SMSC LAN87xx PHYs
 sqphy*	at mii? phy ?			# Seeq 80220/80221/80223 PHYs
-tlphy*	at mii? phy ?			# ThunderLAN PHYs
-tqphy*	at mii? phy ?			# TDK Semiconductor PHYs
+#tlphy*	at mii? phy ?			# ThunderLAN PHYs
+#tqphy*	at mii? phy ?			# TDK Semiconductor PHYs
 ukphy*	at mii? phy ?			# generic unknown PHYs
 urlphy* at mii? phy ?			# Realtek RTL8150L internal PHYs
 

@@ -26,5 +26,5 @@ run_locate.updatedb.sh | run /usr/libexec/locate.updatedb to update locate DB.
 save_nr_of_cpus.sh | save number of CPUs. Used by build scripts to pass the value to number of jobs parameter.
 turn-off-beeper.sh | turn off beeper sound.	
 disable_blocking_mapping_of_null_page.sh | disables protection against NULL pointer dereferences (if possible by kernel config).
-VT-310DP | simplified kernel configuration for VIA VT-310DP motherboard based on GENERIC v1.1210 (padlock is not enabled, use [dynamic kernel modules](http://netbsd.gw.com/cgi-bin/man-cgi?module+7+NetBSD-current)).
+VT-310DP | simplified kernel configuration for VIA VT-310DP motherboard based on GENERIC v1.1229 (padlock, viadrmums are not enabled, use [dynamic kernel modules](http://netbsd.gw.com/cgi-bin/man-cgi?module+7+NetBSD-current)).
 GENERIC_VEX2 | GENERIC kernel changes for ICOP VEX2-6427-5C4NE board, which correctly assigns IRQs for com0-com4, thus fixing failing USB devices as well.
