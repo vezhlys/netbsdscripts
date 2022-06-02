@@ -1,4 +1,4 @@
-# $NetBSD: GENERIC,v 1.1235 2021/03/01 18:12:58 jakllsch Exp $
+# $NetBSD: GENERIC,v 1.1238 2022/04/16 11:57:46 nia Exp $
 #
 # GENERIC machine description file
 #
@@ -22,7 +22,7 @@ include 	"arch/i386/conf/std.i386"
 
 options 	INCLUDE_CONFIG_FILE	# embed config file in kernel binary
 
-#ident		"GENERIC-$Revision: 1.1235 $"
+#ident		"GENERIC-$Revision: 1.1238 $"
 
 maxusers	64		# estimated number of users
 
@@ -138,7 +138,7 @@ options 	KDTRACE_HOOKS	# kernel DTrace hooks
 
 # Kernel Code Coverage Driver.
 #makeoptions	KCOV=1
-#options	KCOV
+#options 	KCOV
 
 # Compatibility options
 include 	"conf/compat_netbsd09.config"
@@ -211,7 +211,7 @@ options 	SCSIVERBOSE	# human readable SCSI error messages
 #options 	PNPBIOSVERBOSE	# verbose PnP BIOS messages
 #options 	PNPBIOSDEBUG	# more fulsome PnP BIOS debugging messages
 #options 	MCAVERBOSE	# verbose MCA device autoconfig messages
-#options 	HDAUDIOVERBOSE	# verbose HDAUDIO driver messages
+#options 	HDAUDIOVERBOSE	# human readable HDAUDIO device names
 
 options 	NFS_BOOT_DHCP,NFS_BOOT_BOOTPARAM
 
@@ -545,8 +545,8 @@ sysbeep0	at pcppi?
 #tdfxdrm*	at drm?		# 3dfx (voodoo) DRM driver
 
 # DRMKMS drivers
-i915drmkms*	at pci? dev ? function ?
-intelfb*	at intelfbbus?
+#i915drmkms*	at pci? dev ? function ?
+#intelfb*	at intelfbbus?
 
 #radeon* 	at pci? dev ? function ?
 #radeondrmkmsfb* at radeonfbbus?
@@ -555,7 +555,7 @@ intelfb*	at intelfbbus?
 #nouveaufb*	at nouveaufbbus?
 
 # DRMUMS drivers
-#viadrmums*	at drm?
+viadrmums*	at drm?
 
 # Serial Devices
 
@@ -684,7 +684,7 @@ nsclpcsio*	at isa?
 #ug0	at isa? port 0xe0
 
 # VIA VT82C686A/VT8231 Hardware Monitor and Power Management Timer
-viaenv* 	at pci? dev ? function ?
+#viaenv* 	at pci? dev ? function ?
 
 # Serial Presence Detect capable memory modules
 #spdmem* at iic? addr 0x50
@@ -1017,12 +1017,12 @@ stge*	at pci? dev ? function ?	# Sundance/Tamarack TC9021 Gigabit
 #txp*	at pci? dev ? function ?	# 3com 3cr990
 #vte*	at pci? dev ? function ?	# RDC R6040 10/100 Ethernet
 vge*	at pci? dev ? function ?	# VIATech VT612X Gigabit Ethernet
-vmx*	at pci? dev ? function ?	# VMware VMXNET3
+#vmx*	at pci? dev ? function ?	# VMware VMXNET3
 vr*	at pci? dev ? function ?	# VIA Rhine Fast Ethernet
 wi*	at pci? dev ? function ?	# Intersil Prism Mini-PCI (802.11b)
 wm*	at pci? dev ? function ?	# Intel 8254x gigabit
 wpi*	at pci? dev ? function ?	# Intel PRO/Wireless 3945ABG
-xge*	at pci? dev ? function ?	# Neterion (S2io) Xframe-I 10GbE
+#xge*	at pci? dev ? function ?	# Neterion (S2io) Xframe-I 10GbE
 
 # EISA network interfaces
 #ep*	at eisa? slot ?			# 3Com 3c579 Ethernet
@@ -1126,6 +1126,7 @@ ipgphy* at mii? phy ?			# IC PLUS IP1000A/IP1001 PHYs
 jmphy*	at mii? phy ?			# Jmicron JMP202/211 PHYs
 lxtphy* at mii? phy ?			# Level One LXT-970 PHYs
 makphy* at mii? phy ?			# Marvell Semiconductor 88E1000 PHYs
+micphy* at mii? phy ?			# Micrel KSZ[89]xxx PHYs
 nsphy*	at mii? phy ?			# NS83840 PHYs
 nsphyter* at mii? phy ? 		# NS83843 PHYs
 pnaphy* at mii? phy ?			# generic HomePNA PHYs
@@ -1146,7 +1147,7 @@ urlphy* at mii? phy ?			# Realtek RTL8150L internal PHYs
 # PCI USB controllers
 xhci*	at pci?	dev ? function ?	# eXtensible Host Controller
 ehci*	at pci?	dev ? function ?	# Enhanced Host Controller
-gcscehci* at pci? dev ? function ?	# Enhanced Host Controller (Geode CSC)
+#gcscehci* at pci? dev ? function ?	# Enhanced Host Controller (Geode CSC)
 ohci*	at pci?	dev ? function ?	# Open Host Controller
 uhci*	at pci?	dev ? function ?	# Universal Host Controller (Intel)
 
@@ -1164,7 +1165,7 @@ uhci*	at cardbus? function ?		# Universal Host Controller (Intel)
 # USB bus support
 usb*	at xhci?
 usb*	at ehci?
-usb*	at gcscehci?
+#usb*	at gcscehci?
 usb*	at ohci?
 #usb*	at slhci?
 usb*	at uhci?
@@ -1470,6 +1471,7 @@ pseudo-device	bridge			# simple inter-network bridging
 pseudo-device	vether			# Virtual Ethernet for bridge
 pseudo-device	agr			# IEEE 802.3ad link aggregation
 pseudo-device	l2tp			# L2TPv3 interface
+pseudo-device	lagg			# Link Aggregation interface
 pseudo-device	npf			# NPF packet filter
 # srt is EXPERIMENTAL
 #pseudo-device	srt			# source-address-based routing
