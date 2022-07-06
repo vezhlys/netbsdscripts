@@ -555,7 +555,8 @@ sysbeep0	at pcppi?
 #nouveaufb*	at nouveaufbbus?
 
 # DRMUMS drivers
-viadrmums*	at drm?
+#viadrmums*	at drm?
+options	drmums
 
 # Serial Devices
 
