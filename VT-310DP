@@ -1,4 +1,4 @@
-# $NetBSD: GENERIC,v 1.1238 2022/04/16 11:57:46 nia Exp $
+# $NetBSD: GENERIC,v 1.1242 2022/09/29 10:10:07 riastradh Exp $
 #
 # GENERIC machine description file
 #
@@ -22,7 +22,7 @@ include 	"arch/i386/conf/std.i386"
 
 options 	INCLUDE_CONFIG_FILE	# embed config file in kernel binary
 
-#ident		"GENERIC-$Revision: 1.1238 $"
+#ident		"GENERIC-$Revision: 1.1242 $"
 
 maxusers	64		# estimated number of users
 
@@ -156,17 +156,18 @@ options 	DKWEDGE_METHOD_APPLE	# Support Apple partitions as wedges
 include "conf/filesystems.config"
 
 # File system options
+options 	FFS_EI		# FFS Endian Independent support
+#options 	FFS_NO_SNAPSHOT	# No FFS snapshot support
 options 	QUOTA		# legacy UFS quotas
 options 	QUOTA2		# new, in-filesystem UFS quotas
-#options 	DISKLABEL_EI	# disklabel Endian Independent support
-options 	FFS_EI		# FFS Endian Independent support
-options 	WAPBL		# File system journaling support
-#options 	UFS_DIRHASH	# UFS Large Directory Hashing - Experimental
-options 	NFSSERVER	# Network File System server
-#options 	FFS_NO_SNAPSHOT	# No FFS snapshot support
+options 	UFS_DIRHASH	# UFS Large Directory Hashing
 options 	UFS_EXTATTR	# Extended attribute support for UFS1
+options 	WAPBL		# File system journaling support
+options 	LFS_DIRHASH	# LFS version of UFS_DIRHASH - experimental
 #options 	EXT2FS_SYSTEM_FLAGS # makes ext2fs file flags (append and
 				# immutable) behave as system flags.
+#options 	DISKLABEL_EI	# disklabel Endian Independent support
+options 	NFSSERVER	# Network File System server
 #options 	V7FS_EI		# V7FS Endian Independent support
 
 # Networking options
@@ -527,8 +528,8 @@ wsmouse*	at pms? mux 0
 wsmouse*	at wsmousedev?
 
 # VIA Unichrome framebuffer console
-unichromefb*	at pci? dev ? function ?
-wsdisplay*	at unichromefb?
+#unichromefb*	at pci? dev ? function ?
+#wsdisplay*	at unichromefb?
 
 attimer0	at isa?
 pcppi0		at isa?
@@ -554,9 +555,9 @@ sysbeep0	at pcppi?
 #nouveau*	at pci? dev ? function ?
 #nouveaufb*	at nouveaufbbus?
 
-# DRMUMS drivers
+# DRMUMS drivers -- make them loadable, but not statically linked in
+options 	DRM_LEGACY
 #viadrmums*	at drm?
-options	drmums
 
 # Serial Devices
 
@@ -1495,6 +1496,7 @@ pseudo-device	lockstat		# lock profiling
 pseudo-device	bcsp			# BlueCore Serial Protocol
 pseudo-device	btuart			# Bluetooth HCI UART (H4)
 #pseudo-device	gpiosim		1	# GPIO simulator
+pseudo-device 	swwdog			# software watchdog timer -- swwdog(4)
 
 # wscons pseudo-devices
 pseudo-device	wsmux			# mouse & keyboard multiplexor
@@ -1505,6 +1507,10 @@ pseudo-device	cmos
 
 # userland interface to drivers, including autoconf and properties retrieval
 pseudo-device	drvctl
+
+# EFI runtime support -- not yet tested
+#options 	EFI_RUNTIME
+#pseudo-device 	efi			# /dev/efi
 
 include "dev/veriexec.config"
 
