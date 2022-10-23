@@ -546,8 +546,8 @@ sysbeep0	at pcppi?
 #tdfxdrm*	at drm?		# 3dfx (voodoo) DRM driver
 
 # DRMKMS drivers
-#i915drmkms*	at pci? dev ? function ?
-#intelfb*	at intelfbbus?
+i915drmkms*	at pci? dev ? function ?
+intelfb*	at intelfbbus?
 
 #radeon* 	at pci? dev ? function ?
 #radeondrmkmsfb* at radeonfbbus?
