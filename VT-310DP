@@ -1,4 +1,4 @@
-# $NetBSD: GENERIC,v 1.1242 2022/09/29 10:10:07 riastradh Exp $
+# $NetBSD: GENERIC,v 1.1258 2024/08/27 00:56:16 riastradh Exp $
 #
 # GENERIC machine description file
 #
@@ -22,7 +22,7 @@ include 	"arch/i386/conf/std.i386"
 
 options 	INCLUDE_CONFIG_FILE	# embed config file in kernel binary
 
-#ident		"GENERIC-$Revision: 1.1242 $"
+#ident		"GENERIC-$Revision: 1.1258 $"
 
 maxusers	64		# estimated number of users
 
@@ -140,6 +140,10 @@ options 	KDTRACE_HOOKS	# kernel DTrace hooks
 #makeoptions	KCOV=1
 #options 	KCOV
 
+# Heartbeat checks
+options 	HEARTBEAT
+options 	HEARTBEAT_MAX_PERIOD_DEFAULT=15
+
 # Compatibility options
 include 	"conf/compat_netbsd09.config"
 #options 	COMPAT_386BSD_MBRPART # recognize old partition ID
@@ -151,6 +155,7 @@ options 	DKWEDGE_METHOD_GPT	# Supports GPT partitions as wedges
 #options 	DKWEDGE_METHOD_MBR	# Support MBR partitions as wedges
 options 	DKWEDGE_METHOD_APPLE	# Support Apple partitions as wedges
 #options 	DKWEDGE_METHOD_RDB	# Support RDB partitions as wedges
+#options 	DKWEDGE_METHOD_TOS	# Support Atari "TOS" partitions as wedges
 
 # File systems
 include "conf/filesystems.config"
@@ -164,8 +169,6 @@ options 	UFS_DIRHASH	# UFS Large Directory Hashing
 options 	UFS_EXTATTR	# Extended attribute support for UFS1
 options 	WAPBL		# File system journaling support
 options 	LFS_DIRHASH	# LFS version of UFS_DIRHASH - experimental
-#options 	EXT2FS_SYSTEM_FLAGS # makes ext2fs file flags (append and
-				# immutable) behave as system flags.
 #options 	DISKLABEL_EI	# disklabel Endian Independent support
 options 	NFSSERVER	# Network File System server
 #options 	V7FS_EI		# V7FS Endian Independent support
@@ -314,14 +317,17 @@ acpidalb*	at acpi?		# ACPI Direct Application Launch Button
 acpiec* 	at acpi?		# ACPI Embedded Controller (late)
 acpiecdt*	at acpi?		# ACPI Embedded Controller (early)
 acpifan*	at acpi?		# ACPI Fan
+acpihed*	at acpi?		# ACPI Hardware Error Device
 acpilid*	at acpi?		# ACPI Lid Switch
 #acpipmtr*	at acpi?		# ACPI Power Meter (experimental)
 #acpismbus*	at acpi?		# ACPI SMBus CMI (experimental)
 acpitz* 	at acpi?		# ACPI Thermal Zone
 acpivga*	at acpi?		# ACPI Display Adapter
 acpiout*	at acpivga?		# ACPI Display Output Device
+acpivmgenid*	at acpi?		# ACPI Virtual Machine Generation ID
 acpiwdrt*	at acpi?		# ACPI Watchdog Resource Table
 acpiwmi*	at acpi?		# ACPI WMI Mapper
+apei*		at apeibus?		# ACPI Platform Error Interfaces
 
 # Mainboard devices
 #aibs*		at acpi?		# ASUSTeK AI Booster hardware monitor
@@ -1367,12 +1373,12 @@ wsmouse*	at mms? mux 0
 # Cryptographic Devices
 
 # PCI cryptographic devices
-glxsb*	at pci? dev ? function ?	# AMD Geode LX Security Block
-hifn*	at pci? dev ? function ?	# Hifn 7755/7811/795x
+#glxsb*	at pci? dev ? function ?	# AMD Geode LX Security Block
+#hifn*	at pci? dev ? function ?	# Hifn 7755/7811/795x
 ubsec*	at pci? dev ? function ?	# Broadcom 5501/5601/580x/582x
 
 # Trusted Platform Module
-tpm*	at isa? iomem 0xfed40000 irq 7
+#tpm*	at isa? iomem 0xfed40000 irq 7
 
 # Joysticks
 
@@ -1403,9 +1409,11 @@ weasel* at pci?
 virtio* at pci? dev ? function ?	# Virtio PCI device
 viomb* at virtio?			# Virtio memory balloon device
 ld* at virtio?				# Virtio disk device
+viocon* at virtio?			# Virtio serial device
 vioif* at virtio?			# Virtio network device
 viornd* at virtio?			# Virtio entropy device
 vioscsi* at virtio?			# Virtio SCSI device
+#vio9p*	at virtio?			# Virtio 9P device
 
 # Hyper-V devices
 #vmbus*		at acpi?		# Hyper-V VMBus
@@ -1418,11 +1426,6 @@ vioscsi* at virtio?			# Virtio SCSI device
 #hvshutdown*	at vmbus?		# Hyper-V Guest Shutdown Service
 #hvtimesync*	at vmbus?		# Hyper-V Time Synchronization Service
 #hvkvp*		at vmbus?		# Hyper-V Data Exchange Service
-
-
-# Pull in optional local configuration
-cinclude "arch/i386/conf/GENERIC.local"
-
 
 # Pseudo-Devices
 
@@ -1519,3 +1522,6 @@ options 	PAX_SEGVGUARD=0		# PaX Segmentation fault guard
 options 	PAX_MPROTECT=1		# PaX mprotect(2) restrictions
 #options 	PAX_MPROTECT_DEBUG=1	# PaX mprotect debug
 options 	PAX_ASLR=1		# PaX Address Space Layout Randomization
+
+# Pull in optional local configuration - always at end
+cinclude	"arch/i386/conf/GENERIC.local"
